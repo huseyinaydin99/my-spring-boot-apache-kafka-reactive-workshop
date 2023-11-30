@@ -2,8 +2,8 @@
 
 ### Apache Kafka Commands
 
+### Linux, Unix or macOS
 ```
-Linux, Unix or macOS
 cd kafka_server
 bin/zookeeper-server-start.sh config/zookeeper.properties
 bin/kafka-server-start.sh config/server.properties
@@ -15,8 +15,8 @@ bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server local
 bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
 ```
 
+### Windows
 ```
-Windows
 cd kafka_server
 bin/zookeeper-server-start.bat config/zookeeper.properties
 bin/kafka-server-start.bat config/server.properties
@@ -30,7 +30,7 @@ bin/kafka-console-consumer.bat --topic quickstart-events --from-beginning --boot
 
 ### Apache Kafka Nedir?
 
-Ön Bilgi:
+### Ön Bilgi:
 
 Apache Kafka linkedin tarafından geliştirilmiş 2011 yılında ilk sürümü çıkmış açık kaynak bir projedir. Apache Kafka aynı RabbitMQ gibi bir Message Broker sistemidir. Bir mesajı göndericiden alır ardından kuyruğa atar ve alıcıya gönderir. Alıcı da mesajı alıp tüketir. Apache Kafka’da kuyruk mekanizmasından daha fazlası vardır. Linkedin şirketinin fonlamasıyla beraber Jay Kreps önderliğinde geliştirilmiştir. İlk sürüm 2011 yılında piyasaya çıkmıştır.
 ![res1](https://github.com/huseyinaydin99/my-spring-boot-apache-kafka-reactive-workshop/assets/16438043/f1a510d8-a2ba-407e-9b1d-74ed85834f23)
@@ -40,7 +40,7 @@ Jay Kreps yani Kafka’yı geliştiren adam Franz Kafka’nın hayatını inceli
 Bundan dolayı performanslı ve hızlı bir sistemdir.
 ![res2](https://github.com/huseyinaydin99/my-spring-boot-apache-kafka-reactive-workshop/assets/16438043/8f9f315d-bea3-47c8-ba6a-44c634761105)
 
-Apache Kafka’yı nerelerde kullanabiliriz?
+### Apache Kafka’yı nerelerde kullanabiliriz?
 1- Web Sayfası Etkinlik İzlemelerinde:
 Kullanıcının(user) girdiği aksiyonlar, sayfalar üzerindeki işlemler, oturum verileri(session) gibi yerlerde tutulabilir.
 • Bu bilgileri merkezi bir yerde yani Apache Kafka’nın topiklerinde(merkezi depolama birimleri) tutabilirsiniz.
@@ -54,7 +54,7 @@ Kullanıcının(user) girdiği aksiyonlar, sayfalar üzerindeki işlemler, oturu
 • Akan verileride yani sürekli alınan verilerde kullanılabilir. Örneğin sürekli veri girişi olan bir uygulama. Sosyal medya vs. gibi.
 ![res3](https://github.com/huseyinaydin99/my-spring-boot-apache-kafka-reactive-workshop/assets/16438043/556b7c3c-3b39-4a6f-ada0-1f6d1a5aa76a)
 
-Apache Kafka’nın Faydaları:
+### Apache Kafka’nın Faydaları:
 
 Rakiplerine göre hızlıdır.
 Yüksek trafik ve düşük gecikme sağlıyor.
@@ -71,16 +71,16 @@ Apache Kafka Bileşenleri:
 • Temelde bir Producer(üretici), bir Kafka Cluster(Topic 1, Topic 2), birde Consumer(tüketici, alıcı) vardır.
 ![res4](https://github.com/huseyinaydin99/my-spring-boot-apache-kafka-reactive-workshop/assets/16438043/189d8693-658a-43e6-a618-8e6e5ef1dc9b)
 
-Producer Nedir?
+### Producer Nedir?
 • Producer(üretici) bize Kafka’nın toplayacağı verileri üretip gönderen yapıdır. Rast gele sayı üretip Kafka topiğine gönderen bir yapı olabilir. Email göndren bir yapı olabilir. Video upload eden bir yapı olabilir.
 • Kafka Cluster’ın içinde Topic’ler vardır. Örneğin Topic 1 ve Topic 2 şeklinde. Tabi biz istediğimiz kadar Topic oluşturabiliriz ihtiyaca göre.
 • Kafka Broker ise Topic’leri içinde tutan yapıdır. Aslında her şeyi bu yapı yapar. Sunucunun ta kendisidir. Port numarası olarak default(var sayılan) 9092 portunu kullanır.
 
-Consumer Nedir?
+### Consumer Nedir?
 • Consumer ise topic’lere bağlanır/join olur/abone olur ve topiği baştan başlayarak okumaya başlar. Topic’i tüketene kadar sömürür. Kendisi tam bir yiyicidir aynı benim gibi :)
 ![res5](https://github.com/huseyinaydin99/my-spring-boot-apache-kafka-reactive-workshop/assets/16438043/dac240b6-fc26-4fb6-a35f-90989e043d10)
 
-İşlemler:
+### İşlemler:
 İlk yapmamız gereken şey Topic’i üretmektir. Mesela bizim bir tane email topic’i olsun. Bu topic’in amacı sistemde gönderilmesi gereken mailleri toplamaktır. Peki nasıl toplayacak? Producer gönderilecek bildirim maillerini MailTopic’e push/publish/send eder. Gönderilen mesaj 0. Index’ yazılır. Producer gönderilecek kampanya maillerini MailTopic’e push/publish/send eder. Gönderilen mesaj 1. Index’ yazılır. Producer gönderilecek güncelleme maillerini MailTopic’e push/publish/send eder. Gönderilen mesaj 2. Index’ yazılır. Consumer ise şunu yapıyor; gidip ilgili topic’e örneğin MailTopic’e join/subscribe oluyor. Sonrasında ise topic’deki verileri Index sırasına göre tek tek okuyup tüketiyor. Okuma işleminin ardından ilgili topic’de hiç bir şey kalmıyor ve tükeniyor. Dilersek bir topic’i parçalara ayırabiliriz. Bu işleme partitioning deniyor. Örneğin UpdateMail ve NotificationMail diye iki farklı partition olsun. Bunlar MailTopic’in içinde tutulsun. Güncelleme maillerini UpdateMail isimli part’a push/send ederiz. Bildirimleri ise NotificationMail isimli part’a push/send ederiz.
 Consumer(tüketici) tarafında ise MultiPartition ile tüketim yapılır. 1'den fazla partition varsa biz sadece örneğin UpdateMail partition’u oku diyoruz teorik olarak. O da gidip UpdateMail partition’u okuyor ve tüketiyor. Bağlı olduğu partition’da bir bilgi kalmayınca duruyor ve yeni bir bilginin gelmesini bekliyor. Bu noktada sanki kuyruk mekanizması gibi davranıyor. Apache Kafka, RabbitMQ’den farklı lanse ediliyor çünkü Apache Kafka hem Queue(kuyruk) hem de Pub/Sub(Publisher/Subscriber) yani abone olunan ve abone olan modellerini aynı anda birlikte sunuyor. Bu diğerlerinden en önemli farkıdır.
 ![res6](https://github.com/huseyinaydin99/my-spring-boot-apache-kafka-reactive-workshop/assets/16438043/f9ac2b2e-e6da-45ff-830b-12b8e960cf73)
@@ -88,12 +88,12 @@ Consumer(tüketici) tarafında ise MultiPartition ile tüketim yapılır. 1'den 
 Queue(kuyruk) nedir? Mesaj bir kere publish(göndermek/paylaşmak) edilir 1 kere consumer(tüketici) tarafından consume(tüketilir). Consume işlemi bitince kuyruktaki mesajlar tükenir, biter.
 ![res7](https://github.com/huseyinaydin99/my-spring-boot-apache-kafka-reactive-workshop/assets/16438043/6974a450-9096-43cd-9b21-d52f432617e4)
 
-Pub/Sub Nedir?
+### Pub/Sub Nedir?
 
 Mesaj bir defa publish edildikten sonra defalarca consume edilebilir. Consume edildi diye silinmez. YouTube gibi düşünebiliriz abone olunan ve abone olan şeklinde. Consume edildikten sonra Pubsisher’e geri bildirim gönderilir.
 ![res8](https://github.com/huseyinaydin99/my-spring-boot-apache-kafka-reactive-workshop/assets/16438043/c20791a4-c3d1-40d5-98bf-7c098ba8cd3b)
 
-Consume Group(tüketici grubu) Nedir?:
+### Consume Group(tüketici grubu) Nedir?:
 
 Partitionların paralel olarak işlenmesi için kullanılır. 1 consumer 1 partition okumaktan sorumludur(olması gereken budur). Örnek; bir tane Kafka Cluster’ımız var. Portu 9092 diyelim. Cluster’da UpdateMail isimli Topic’imiz olsun. Bu topic 2 farklı partition’a bölünsün Partition 1 ve Partition 2 şeklinde. Bir tanede Consumer Group’umuz olsun. Şimdilik içi boş. Consumer Group’umuzun içinde de 2 tane consumer olsun Consumer 1 ve Consumer 2 şeklinde. Consumer Group’umuz UpdateMail topic’ine join oluyor. Consumer Group’umuzun içindeki Consumer 1 UpdateMail Topic’inin içindeki Partition 1 ve Partition 2'ye join olsun.
 — — — — — — — — —
@@ -109,22 +109,22 @@ Bir Producer, bir Kafka Broker, Kafka Broker’in içinde de 1 Topic, o Topic’
 ![res9](https://github.com/huseyinaydin99/my-spring-boot-apache-kafka-reactive-workshop/assets/16438043/79d55a1f-f1c9-423a-a8e2-eb5e2f16911f)
 Queue gibi davranmasını istiyorsak tüm Consumer’leri tek Consumer Group’a koymamız gerekir. Pub/Sub gibi davranmasını istiyorsak her bir Consumer’i kendine ait başka bir Consumer Group içine koymalıyız.
 
-Topic Bazlı Dağıtık Sistem(Disturbuted System) Nedir?
+### Topic Bazlı Dağıtık Sistem(Disturbuted System) Nedir?
 Bir Kafka sunucu düşünelim. İçinde bir Topic var. O Topic’inde içinde 2 farklı Partition bulunsun. Elimizde başka sunucularda var örneğin 4 sunucu daha olsun. Bu dört sunucuda 1. sunucunun bire bir kopyaları olsun. Okuma yaparken zaten bir şey kaybetmeyiz. Yazma işleminde ise yine bir şey kaybedilmez. 1. sunucuya veriyi yazınca diğerleride veriyi alır.
 Bu şekilde aklımızda kabaca kalsa yeterli. Bu durumda tıpkı internet kafe gibi diğer bilgisayarları yöneten ana makina olur. Ana makinaya Master(efendi), diğer makinalara ise Slave(kul, köle) deniliyor. Ana makina diğerlerine hükmediyor. Kafka’da bu durumda ana makinaya Leader(lider) Slave(köle) yani clone(kopya) olanlara ise Follower(takipçi) deniliyor. Veriler yazılırken Leader’e yazılır daha sonrasında ise Follower’a kopyalanır. Ana kaynak Leader’dir.
 Peki ya Leader sunucu çökerse ne olacak? Veri Leader’e yazılamaz bu durumda. O zaman bu durum veri kaybı demektir. Apache Kafka işte bu durumu engellemek için Partition bazlı disturbuted(dağıtık) sistemede destek veriyor. Kafka Cluster 1'de 2 partition olsun. Kafka Cluster 2'de aynı şekilde kopya 2 partition olsun. Bu durum da Kafka Cluster 1'de Partition 1 Leader olur ve Kafka Cluster 2'de Partition 2 Leader olur.
 ![res10](https://github.com/huseyinaydin99/my-spring-boot-apache-kafka-reactive-workshop/assets/16438043/d2080038-7828-4fc2-a592-5bac6a40d2cc)
 
-Apache Zookeeper Nedir?
+### Apache Zookeeper Nedir?
 
 Kafka’nın çalışması için bir gerekliliktir. Kafka’daki bilgilerin stabil bir şekilde tutulmasını sağlıyor ve Kafka Cluster’e bağlı bir şekilde çalışıyor. Kafka’yı çalıştırırken önce Zookeeper çalıştırılır. Kafka, Zookeeper’a bağımlıdır. Zookeeper hayvanat bahçesi bakıcısı demektir. Yani bir ekosistemin yöneticisi anlamındadır.
 ![res11](https://github.com/huseyinaydin99/my-spring-boot-apache-kafka-reactive-workshop/assets/16438043/f4d6b69f-d893-4c32-8599-f3ef57a0ff6e)
 
-Gossip Protokolü Nedir?
+### Gossip Protokolü Nedir?
 1 Producer, 2 Kafka Cluster, her Cluster’da 2 Partition ve 1 Consumer olsun. Producer, Kafka Cluster’ın Partition 2'e bir tane Mail push etsin. Bu durumda gönderilem mail Leader olan Partition’a yazılır. Peki biz Leader olanı nasıl bileceğizde göndereceğiz? Böyle bir durumda Leader olanı bilmemize gerek yoktur, bizim yerimize Apache Zookeeper biliyor. Zookeeper Leader olan Partition’u bulabilmek adına Cluster’larla ve Partition’larla kendi aralarında konuştukları için Gossip Protocol denmiş. Gossip kelime anlamı olarak dedikodu demektir. Leader dedikodu ve konuşma sonrası tespit edilip bilgi Leader’e yazılıyor sonrasında ise Follower’lara kopyalanıyor.
 ![res12](https://github.com/huseyinaydin99/my-spring-boot-apache-kafka-reactive-workshop/assets/16438043/1cfd0884-25a8-45eb-bdf5-31ec816e49ac)
 
-Kafka Kurulumu:
+### Kafka Kurulumu:
 
 İndirme adresi: https://kafka.apache.org/downloads
 İlgili adresten 2.5.0 sürümünü indiriniz. Ben bu sürümü tercih ediyorum. Zipten C:\ dizinin içine Winrar programı ile çıkartınız. MacOS işletim düzeninde farklı olabilir zipten çıkarma.
@@ -150,7 +150,7 @@ $: C:\kafka\bin\windows\kafka-consumer-groups.bat - bootstrap-server localhost:9
 $: C:\kafka\bin\windows\kafka-consumer-groups.bat - bootstrap-server localhost:9092 - describe - group console-consumer-57896
 ```
 
-Docker üzerinden Apache Kafka kullanımı:
+### Docker üzerinden Apache Kafka kullanımı:
 Docker’ın kurulu olduğunu varsayıyorum. Apache Kafka’yı kullanabilmemiz için öncelikle Zookeeper’in ayakta olması lazım.
 
 ```
