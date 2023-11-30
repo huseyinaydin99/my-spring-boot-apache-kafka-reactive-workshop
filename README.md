@@ -1,6 +1,8 @@
 # my-spring-boot-apache-kafka-workshop
 
 ### Apache Kafka Commands
+
+```
 Linux, Unix or macOS
 cd kafka_server
 bin/zookeeper-server-start.sh config/zookeeper.properties
@@ -22,6 +24,7 @@ bin/kafka-topics.bat --describe --topic quickstart-events --bootstrap-server loc
 bin/kafka-topics.bat --describe --topic test-topic --bootstrap-server localhost:9092
 bin/kafka-console-producer.bat --topic quickstart-events --bootstrap-server localhost:9092
 bin/kafka-console-consumer.bat --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
+```
 
 ### Apache Kafka Nedir?
 
