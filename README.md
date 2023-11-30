@@ -13,7 +13,9 @@ bin/kafka-topics.sh --describe --topic quickstart-events --bootstrap-server loca
 bin/kafka-topics.sh --describe --topic test-topic --bootstrap-server localhost:9092
 bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092
 bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
+```
 
+```
 Windows
 cd kafka_server
 bin/zookeeper-server-start.bat config/zookeeper.properties
