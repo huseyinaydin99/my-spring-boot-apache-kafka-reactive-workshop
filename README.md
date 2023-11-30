@@ -2,7 +2,7 @@
 
 ### Apache Kafka Commands
 
-### Linux, Unix or macOS
+#### Linux, Unix or macOS
 ```
 cd kafka_server
 bin/zookeeper-server-start.sh config/zookeeper.properties
@@ -15,7 +15,7 @@ bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server local
 bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
 ```
 
-### Windows
+#### Windows
 ```
 cd kafka_server
 bin/zookeeper-server-start.bat config/zookeeper.properties
